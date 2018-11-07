@@ -60,6 +60,51 @@ public class DriveTrain extends Subsystem {
     	frontRight.set(rightStick.getRawAxis(1) * 1.0);
     	
     }
+	
+    //-------------------------------------------------------------------------
+    // This code is simply to lay out concepts of programming with these wheels
+    // It is in no way functional and should not be considered as such
+    //
+    // currently, it is setup to have full omnidirectional movement using one
+    // stick
+    // the other stick could then be used for rotation
+    // I have no clue if or how the two sticks will work in tandem
+    // That is not my problem
+    //
+    // As a side note, the rotation for the moment is only from the center of
+    // the robot. As far as I can tell, mecanums allow for rotation around any
+    // point. I don't see the point in this, so I didn't program it, but let
+    // it be known that it could be done
+    // -signed, General Idiot
+    //-------------------------------------------------------------------------
+    public void moveMecanum() {
+    	
+    	// finds angle of joystick
+    	double angle = Math.toDegrees(Math.atan(leftStick.getRawAxis(1) / leftStick.getRawAxis(0)));
+    	// allows for all angles
+    	if (leftStick.getRawAxis(0) < 0.0) {
+    		angle = 180 - angle;
+    	}
+    	// finds the magnitude of the joystick
+    	double magnitude = Math.sqrt(Math.pow(leftStick.getRawAxis(0), 2) + Math.pow(leftStick.getRawAxis(0), 1));
+    	
+    	// Directional movement
+    	frontLeft.set(Math.cos(angle - 45.0) * -1.0 * magnitude);
+    	rearLeft.set(Math.sin(angle - 45.0) * -1.0 * magnitude);
+    	
+    	frontRight.set(Math.sin(angle - 45.0) * 1.0 * magnitude);
+    	rearRight.set(Math.cos(angle - 45.0) * 1.0 * magnitude);
+    	
+    	// Rotational movement
+    	if (rightStick.getRawAxis(1) != 0.0) {
+    	frontLeft.set(rightStick.getRawAxis(1) * -1.0);
+    	rearLeft.set(rightStick.getRawAxis(1) * -1.0);
+    	
+    	frontRight.set(rightStick.getRawAxis(1) * -1.0);
+    	rearRight.set(rightStick.getRawAxis(1) * -1.0);
+    	
+    	}
+    }
     
     /**
      *  Polls the TalonSRX's for the Encoder values.
