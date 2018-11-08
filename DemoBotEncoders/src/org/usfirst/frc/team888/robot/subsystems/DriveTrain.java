@@ -87,16 +87,16 @@ public class DriveTrain extends Subsystem {
     	}
     	// finds the magnitude of the joystick
     	double magnitude = Math.sqrt(Math.pow(leftStick.getRawAxis(0), 2) + Math.pow(leftStick.getRawAxis(0), 1));
-    	
+    	if (rightStick.getRawAxis(1) == 0.0) {
     	// Directional movement
     	frontLeft.set(Math.cos(angle - 45.0) * -1.0 * magnitude);
     	rearLeft.set(Math.sin(angle - 45.0) * -1.0 * magnitude);
     	
     	frontRight.set(Math.sin(angle - 45.0) * 1.0 * magnitude);
     	rearRight.set(Math.cos(angle - 45.0) * 1.0 * magnitude);
-    	
+	
     	// Rotational movement
-    	if (rightStick.getRawAxis(1) != 0.0) {
+	} (rightStick.getRawAxis(1) != 0.0) {
     	frontLeft.set(rightStick.getRawAxis(1) * -1.0);
     	rearLeft.set(rightStick.getRawAxis(1) * -1.0);
     	
